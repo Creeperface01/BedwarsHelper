@@ -1,0 +1,16 @@
+name: BedWarsHelper
+version: "1.0"
+api: ["1.0.0"]
+main: com.creeperface.nukkitx.bedwars.BedWarsHelper
+author: CreeperFace
+depend: ["KotlinLib"]
+
+commands:
+  bwconfigure:
+    permission: bedwars.configure
+  bwsave:
+    permission: bedwars.configure
+  bwhistory:
+    permission: bedwars.configure
+  bwexit:
+    permission: bedwars.configure
