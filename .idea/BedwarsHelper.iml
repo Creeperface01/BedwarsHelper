@@ -3,7 +3,7 @@
   <component name="AutoImportedSourceRoots">
     <option name="directories">
       <list>
-        <option value="D:\IdeaProjects\BedwarsHelper/src/main/kotlin" />
+        <option value="$MODULE_DIR$/src/main/kotlin" />
         <option value="src/main/kotlin" />
       </list>
     </option>

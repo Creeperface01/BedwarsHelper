@@ -2,7 +2,6 @@ package com.creeperface.nukkitx.bedwars
 
 import cn.nukkit.Player
 import cn.nukkit.block.BlockBed
-import cn.nukkit.block.BlockID
 import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
 import cn.nukkit.event.EventHandler
@@ -27,6 +26,9 @@ import cn.nukkit.math.Vector3
 import cn.nukkit.plugin.PluginBase
 import cn.nukkit.utils.DyeColor
 import cn.nukkit.utils.TextFormat
+import com.creeperface.nukkit.kformapi.form.util.ImageData
+import com.creeperface.nukkit.kformapi.form.util.ImageType
+import java.util.*
 
 class BedWarsHelper : PluginBase(), Listener {
 
@@ -87,6 +89,8 @@ class BedWarsHelper : PluginBase(), Listener {
 
         window.addElement(ElementInput("Name of the map"))
         window.addElement(ElementInput("Number of teams"))
+        window.addElement(ElementDropdown("Map icon type", listOf("None", "URL", "path")))
+        window.addElement(ElementInput("Map icon URL for form windows"))
 
         player.showFormWindow(window, MAP_BASE_ID)
     }
@@ -192,9 +196,9 @@ class BedWarsHelper : PluginBase(), Listener {
                     }
                 }
                 "Team bed" -> {
-                    var secondPart: Vector3? = null
-
                     if (b is BlockBed) {
+                        var secondPart: Vector3? = null
+
                         for (face in BlockFace.Plane.HORIZONTAL) {
                             (b.getSide(face) as? BlockBed)?.let { bed ->
                                 secondPart = bed
@@ -204,15 +208,15 @@ class BedWarsHelper : PluginBase(), Listener {
                                 break
                             }
                         }
-                    }
 
-                    if (secondPart == null) {
-                        p.sendMessage("${TextFormat.RED}Bed not found")
-                    } else {
-                        team.bed1 = b
-                        team.bed2 = secondPart
-                        profile.modified = true
-                        p.sendMessage("${TextFormat.GREEN}Position set")
+                        if (secondPart == null) {
+                            p.sendMessage("${TextFormat.RED}Bed not found")
+                        } else {
+                            team.bed1 = b
+                            team.bed2 = secondPart
+                            profile.modified = true
+                            p.sendMessage("${TextFormat.GREEN}Position set")
+                        }
                     }
                 }
                 "Villager Position" -> {
@@ -255,10 +259,26 @@ class BedWarsHelper : PluginBase(), Listener {
             MAP_BASE_ID -> {
                 if (response !is FormResponseCustom) return
 
-                val profile = MapConfigurationProfile(p, MapConfiguration(
+                val imageType = response.getDropdownResponse(2).elementID
+                val imageData = if (imageType > 0) {
+                    val url = response.getInputResponse(3)
+
+                    if (url.isBlank()) {
+                        null
+                    } else {
+                        ImageData(ImageType.values()[imageType], url)
+                    }
+                } else {
+                    null
+                }
+
+                val profile = MapConfigurationProfile(
+                    p, MapConfiguration(
                         name = response.getInputResponse(0),
-                        teams = Array(response.getInputResponse(1).toInt()) { MapConfiguration.TeamData() }
-                ))
+                        teams = Array(response.getInputResponse(1).toInt()) { MapConfiguration.TeamData() },
+                        icon = imageData
+                    )
+                )
 
                 profile.team = 0
 

@@ -5,14 +5,16 @@ import cn.nukkit.utils.Config
 import cn.nukkit.utils.ConfigSection
 import cn.nukkit.utils.DyeColor
 import cn.nukkit.utils.TextFormat
+import com.creeperface.nukkit.kformapi.form.util.ImageData
 import java.io.File
 
 class MapConfiguration(
-        val name: String,
-        val bronze: MutableSet<Vector3> = mutableSetOf(),
-        val iron: MutableSet<Vector3> = mutableSetOf(),
-        val gold: MutableSet<Vector3> = mutableSetOf(),
-        val teams: Array<TeamData>
+    val name: String,
+    val icon: ImageData?,
+    val bronze: MutableSet<Vector3> = mutableSetOf(),
+    val iron: MutableSet<Vector3> = mutableSetOf(),
+    val gold: MutableSet<Vector3> = mutableSetOf(),
+    val teams: Array<TeamData>
 ) {
 
     data class TeamData(
