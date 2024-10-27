@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.creeperface.nukkitx.bedwars</groupId>
-    <artifactId>helper</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>bedwarshelper</artifactId>
+    <version>1.0</version>
 
     <properties>
         <kotlin.version>2.0.21</kotlin.version>
@@ -20,6 +20,10 @@
         <repository>
             <id>opencollab-repo-snapshot</id>
             <url>https://repo.opencollab.dev/maven-snapshots</url>
+        </repository>
+        <repository>
+            <id>creeperface-github</id>
+            <url>https://maven.pkg.github.com/Creeperface01/*</url>
         </repository>
     </repositories>
 
@@ -56,8 +60,9 @@
         </dependency>
         <dependency>
             <groupId>com.creeperface.nukkit.kformapi</groupId>
-            <artifactId>KFormAPI</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>kformapi</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -85,9 +90,6 @@
                 </executions>
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
-                    <args>
-                        <arg>-Xjvm-default=compatibility</arg>
-                    </args>
                 </configuration>
             </plugin>
             <plugin>
